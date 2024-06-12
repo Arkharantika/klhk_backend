@@ -19,7 +19,7 @@ export const textExcel = async (req, res) => {
 
   // Define the default header
   const defaultHeader = [
-    ["NAMA IPPKH/PPKH", , identity.pos_name],
+    ["NAMA IPPKH/PPKH", ,],
     ["NOMOR IPPKH/PPKH", ,],
     ["PROVINSI", , identity.kd_provinsi],
     ["KABUPATEN", , identity.kd_kabupaten],
@@ -27,13 +27,12 @@ export const textExcel = async (req, res) => {
     ["DESA", , identity.kd_desa],
     ["DAS", ,],
     ["KODE HARDWARE", , identity.kd_hardware],
-    ["LOKASI", , identity.location],
-    ["KOORDINAT", , "lS : " + identity.latitude],
-    ["", , "LU : " + identity.longitude],
+    ["LOKASI", ,],
+    ["KOORDINAT", ,],
     ["TAHUN PEMASANGAN ALAT", ,],
     ["TAHUN DATA", ,],
     [],
-    ["No", "Time", "Debit", , , "Rain", ,],
+    ["No", "Time", "Debit", , , , ,],
     [
       "",
       "",
@@ -117,8 +116,10 @@ export const textExcel = async (req, res) => {
 
   // Combine defaultHeader and dataArray
   const combinedData = [...defaultHeader, ...dataArray];
+
   // Convert combinedData to a worksheet
   const worksheet = XLSX.utils.aoa_to_sheet(combinedData);
+
   // Define the merge range for header
   worksheet["!merges"] = [
     { s: { r: 0, c: 0 }, e: { r: 0, c: 1 } },
@@ -136,63 +137,33 @@ export const textExcel = async (req, res) => {
     { s: { r: 14, c: 0 }, e: { r: 13, c: 0 } },
     { s: { r: 14, c: 1 }, e: { r: 13, c: 1 } },
     { s: { r: 13, c: 2 }, e: { r: 13, c: 4 } },
-    { s: { r: 13, c: 5 }, e: { r: 13, c: 6 } },
   ];
 
-  //   // Center the merged cell
-  //   if (!worksheet["C14"]) worksheet["C14"] = {}; // Initialize cell object if not present
-  //   worksheet["C14"].s = {
-  //     alignment: {
-  //       horizontal: "center",
-  //       vertical: "center",
-  //     },
-  //   };
-
-  // Define a common border style
-  const borderStyle = {
-    top: { style: "thin", color: { rgb: "000000" } },
-    bottom: { style: "thin", color: { rgb: "000000" } },
-    left: { style: "thin", color: { rgb: "000000" } },
-    right: { style: "thin", color: { rgb: "000000" } },
+  // Center the merged cell
+  if (!worksheet["A14"]) worksheet["A14"] = {}; // Initialize cell object if not present
+  worksheet["A14"].s = {
+    alignment: {
+      horizontal: "center",
+      vertical: "center",
+    },
+  };
+  if (!worksheet["B14"]) worksheet["B14"] = {}; // Initialize cell object if not present
+  worksheet["B14"].s = {
+    alignment: {
+      horizontal: "center",
+      vertical: "center",
+    },
+  };
+  if (!worksheet["C14"]) worksheet["C14"] = {}; // Initialize cell object if not present
+  worksheet["C14"].s = {
+    alignment: {
+      horizontal: "center",
+      vertical: "center",
+    },
   };
 
-  // Apply the border style to each cell in the merged area
-  const applyBorderStyle = (cell) => {
-    if (!cell) cell = {}; // Initialize cell if not present
-    cell.s = {
-      border: borderStyle,
-      alignment: {
-        horizontal: "center",
-        vertical: "center",
-      },
-    };
-    return cell;
-  };
-
-  const cellsToBorder = [
-    "A14",
-    "A15",
-    "B14",
-    "B15",
-    "C14",
-    "C15",
-    "D14",
-    "D15",
-    "E14",
-    "E15",
-    "F14",
-    "G14",
-    "H14",
-    "I14",
-    "F15",
-    "G15",
-    "H15",
-  ];
-  cellsToBorder.forEach((cell) => {
-    worksheet[cell] = applyBorderStyle(worksheet[cell]);
-  });
-  // Apply the border and alignment to the merged cells
-  //   worksheet["A14"] = applyBorderStyle(worksheet["A14"]);
+  // Optional: set content for the merged cell
+  //   worksheet["A14"].v = "Merged Cell Content";
 
   // Create a new workbook and append the worksheet
   const workbook = XLSX.utils.book_new();
