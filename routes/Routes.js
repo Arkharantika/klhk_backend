@@ -40,6 +40,7 @@ import {
 import {
   MiniDashboardInfo,
   dashboardGPA,
+  foto_show,
   getAllData,
   getChartData,
   getHardwares,
@@ -104,6 +105,7 @@ router.get("/dashboardgpa", dashboardGPA);
 router.get("/dashboardinfo", MiniDashboardInfo);
 router.post("/updatehardware/:id", updateHardware);
 router.get("/infodashboard/:id", infoDahsboard);
+router.post("/getfoto/:id", foto_show);
 
 // >>> FOR HARDWARES
 router.post("/exportexcel/:id", textExcel);

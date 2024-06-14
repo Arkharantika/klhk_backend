@@ -2,6 +2,7 @@ import { Op } from "sequelize";
 import AllData from "../models/AllData.js";
 import MstHardware from "../models/MstHardware.js";
 import RawGPA from "../models/RawGPA.js";
+import FotoModel from "../models/FotoModel.js";
 import path from "path";
 import fs from "fs";
 
@@ -247,5 +248,44 @@ export const updateHardware = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json(error);
+  }
+};
+
+export const foto_show = async (req, res) => {
+  const hardwarenya = await MstHardware.findOne({
+    where: {
+      kd_hardware: req.params.id,
+    },
+  });
+  const { startDate, endDate } = req.body;
+  if (startDate === "kentang" && endDate === "kentang") {
+    try {
+      const response = await FotoModel.findAll({
+        where: {
+          img_num: hardwarenya.cam,
+        },
+        order: [["createdAt", "DESC"]],
+        limit: 6,
+      });
+      res.json(response);
+    } catch (error) {
+      res.json(error);
+    }
+  } else {
+    try {
+      const response = await FotoModel.findAll({
+        where: {
+          img_num: hardwarenya.cam,
+          createdAt: {
+            // [Op.between]: [newStart, newEnd],
+            [Op.between]: [startDate, endDate],
+          },
+        },
+        order: [["createdAt", "DESC"]],
+      });
+      res.json(response);
+    } catch (error) {
+      res.json(error);
+    }
   }
 };

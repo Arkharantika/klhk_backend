@@ -18,6 +18,7 @@ import router from "./routes/Routes.js";
 import { Sequelize } from "sequelize";
 import AllData from "./models/AllData.js";
 import RawGPA from "./models/RawGPA.js";
+import FotoModel from "./models/FotoModel.js";
 
 // --- DEFINE APP FROM EXPRESS
 const app = express();
@@ -43,11 +44,9 @@ try {
   await DB.authenticate();
   console.log("Database Connected !");
   // await Presensi.sync({ force: true });
-  await AllData.sync();
-  await RawGPA.sync();
-  // await Users.sync({ force: true });
-  // await Siswa.sync({ force: true });
-  // await MuridKelas.sync({ force: true });
+  // await AllData.sync();
+  // await RawGPA.sync();
+  await FotoModel.sync();
 } catch (error) {
   console.log(error);
 }

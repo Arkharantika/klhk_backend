@@ -75,6 +75,9 @@ const MstHardware = DB.define(
     sed_catchment_area: {
       type: DataTypes.DOUBLE,
     },
+    cam: {
+      type: DataTypes.STRING,
+    },
   },
   { tableName: "mst_hardware" }
 );

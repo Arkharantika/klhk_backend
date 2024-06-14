@@ -19,29 +19,29 @@ export const textExcel = async (req, res) => {
 
   // Define the default header
   const defaultHeader = [
-    ["NAMA IPPKH/PPKH", ,],
-    ["NOMOR IPPKH/PPKH", ,],
+    ["NAMA IPPKH/PPKH", , identity.pos_name],
+    ["NOMOR IPPKH/PPKH", , identity.no_pos],
     ["PROVINSI", , identity.kd_provinsi],
     ["KABUPATEN", , identity.kd_kabupaten],
     ["KECAMATAN", , identity.kd_kecamatan],
     ["DESA", , identity.kd_desa],
     ["DAS", ,],
     ["KODE HARDWARE", , identity.kd_hardware],
-    ["LOKASI", ,],
-    ["KOORDINAT", ,],
+    ["LOKASI", , identity.location],
+    ["KOORDINAT", , "LS : " + identity.latitude],
+    ["", , "LU : " + identity.longitude],
     ["TAHUN PEMASANGAN ALAT", ,],
     ["TAHUN DATA", ,],
-    [],
-    ["No", "Time", "Debit", , , , ,],
+    ["No", "Waktu", "Debit", , , "Hujan", , "sedimentasi"],
     [
       "",
       "",
-      "Average",
+      "Rata-rata",
       "Max Debit",
       "Min Debit",
-      "Rainfall",
-      "Rainy days",
-      "Sedimentasi",
+      "Curah Hujan",
+      "Jumlah Hari Hujan",
+      "",
     ],
   ];
 
@@ -137,8 +137,16 @@ export const textExcel = async (req, res) => {
     { s: { r: 14, c: 0 }, e: { r: 13, c: 0 } },
     { s: { r: 14, c: 1 }, e: { r: 13, c: 1 } },
     { s: { r: 13, c: 2 }, e: { r: 13, c: 4 } },
+    { s: { r: 13, c: 5 }, e: { r: 13, c: 6 } },
+    { s: { r: 13, c: 7 }, e: { r: 14, c: 7 } },
   ];
 
+  const borderStyle = {
+    top: { style: "thin", color: { rgb: "000000" } },
+    bottom: { style: "thin", color: { rgb: "000000" } },
+    left: { style: "thin", color: { rgb: "000000" } },
+    right: { style: "thin", color: { rgb: "000000" } },
+  };
   // Center the merged cell
   if (!worksheet["A14"]) worksheet["A14"] = {}; // Initialize cell object if not present
   worksheet["A14"].s = {
@@ -146,6 +154,7 @@ export const textExcel = async (req, res) => {
       horizontal: "center",
       vertical: "center",
     },
+    border: borderStyle
   };
   if (!worksheet["B14"]) worksheet["B14"] = {}; // Initialize cell object if not present
   worksheet["B14"].s = {
@@ -156,6 +165,20 @@ export const textExcel = async (req, res) => {
   };
   if (!worksheet["C14"]) worksheet["C14"] = {}; // Initialize cell object if not present
   worksheet["C14"].s = {
+    alignment: {
+      horizontal: "center",
+      vertical: "center",
+    },
+  };
+  if (!worksheet["F14"]) worksheet["F14"] = {}; // Initialize cell object if not present
+  worksheet["F14"].s = {
+    alignment: {
+      horizontal: "center",
+      vertical: "center",
+    },
+  };
+  if (!worksheet["H14"]) worksheet["H14"] = {}; // Initialize cell object if not present
+  worksheet["H14"].s = {
     alignment: {
       horizontal: "center",
       vertical: "center",
