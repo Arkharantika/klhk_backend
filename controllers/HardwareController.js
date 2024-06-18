@@ -39,6 +39,20 @@ export const getAllData = async (req, res) => {
   const newEnd = req.body.endDate.replace("T", " ");
   console.log("new : ", newStart, newEnd);
   console.log(req.body);
+  if (startDate === "kentang" && endDate === "kentang") {
+    try {
+      const response = await AllData.findAll({
+        where: {
+          kd_hardware: req.params.id,
+        },
+        order: [["createdAt", "DESC"]],
+        limit: 50,
+      });
+      return res.json(response);
+    } catch (error) {
+      return res.json(error);
+    }
+  }
   try {
     const response = await AllData.findAll({
       where: {
