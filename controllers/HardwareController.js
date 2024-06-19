@@ -140,23 +140,24 @@ export const dashboardGPA = async (req, res) => {
   }
 };
 
+// >>> TIDAK TERPAKAI
 export const MiniDashboardInfo = async (req, res) => {
-  try {
-    const total_aktif = await MstHardware.count({
-      where: {
-        condition: 1,
-      },
-    });
-    const total_mati = await MstHardware.count({
-      where: {
-        condition: 0,
-      },
-    });
-    const response = { aktif: total_aktif, mati: total_mati };
-    res.json(response);
-  } catch (error) {
-    res.json(error);
-  }
+  // try {
+  //   const total_aktif = await MstHardware.count({
+  //     where: {
+  //       condition: 1,
+  //     },
+  //   });
+  //   const total_mati = await MstHardware.count({
+  //     where: {
+  //       condition: 0,
+  //     },
+  //   });
+  //   const response = { aktif: total_aktif, mati: total_mati };
+  //   res.json(response);
+  // } catch (error) {
+  //   res.json(error);
+  // }
 };
 
 export const updateHardware = async (req, res) => {
