@@ -51,6 +51,7 @@ import {
 } from "../controllers/HardwareController.js";
 
 import {
+  harianExcel,
   textExcel,
   // trySheet
 } from "../controllers/ExcelController.js";
@@ -107,8 +108,9 @@ router.post("/updatehardware/:id", updateHardware);
 router.get("/infodashboard/:id", infoDahsboard);
 router.post("/getfoto/:id", foto_show);
 
-// >>> FOR HARDWARES
+// >>> FOR EXPORTS EXCEL
 router.post("/exportexcel/:id", textExcel);
+router.post("/exportharian/:id", harianExcel);
 // router.post("/trysheet/:id", trySheet);
 
 export default router;
