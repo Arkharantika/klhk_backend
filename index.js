@@ -46,7 +46,7 @@ try {
   // await Presensi.sync({ force: true });
   // await AllData.sync();
   // await RawGPA.sync();
-  await FotoModel.sync();
+  // await FotoModel.sync();
 } catch (error) {
   console.log(error);
 }
